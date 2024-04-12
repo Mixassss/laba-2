@@ -1,16 +1,33 @@
 #include <iostream>
 #include <string>
-#include <regex>
+
 using namespace std;
 
 int main() {
-    string stroka = "11001101000110";
-    regex regular("1[0]+1"); // условие поиска
-    smatch res; // результат
-
-    while (regex_search(stroka, res, regular)) {
-        cout << res[0] << endl;
-        stroka = res.suffix().str(); // Suffix после найденной комбинации удаляет её и возвращает поиск по строке
+    
+    string str = "sd10sds101sdd100101"; // строка
+    int in = 0;
+    string out ="";
+    for (int i = 0; i < str.length(); i++){
+        if(str[i]=='1' && in == 0){
+            in = 1;
+            out = '1';
+            continue; 
+        }
+        if(str[i]=='1' && in == 2){
+            out += '1';
+            cout << out << endl;
+            in = 0;
+            i--;
+        }
+        if (str[i]=='0' && (in == 1 || in == 2)){
+            out += '0';
+            in = 2;
+        }
+        else if(in == 1 || in == 2){
+            in = 0;
+        }
+        
     }
 
     return 0;
