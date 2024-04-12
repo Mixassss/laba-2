@@ -1,11 +1,24 @@
-use regex::Regex;
-
 fn main() {
-    let stroka = "11001101000110";
-    let regular = Regex::new(r"1[0]+1").unwrap();
-    let matches = regular.find_iter(stroka);
+    let str = "sd10sds101sdd100101"; // строка
+    let mut in_state = 0;
+    let mut out = String::new();
 
-    for mat in matches {
-        println!("{}", mat.as_str());
+    for (i, c) in str.chars().enumerate() {
+        if c == '1' && in_state == 0 {
+            in_state = 1;
+            out.push('1');
+            continue;
+        }
+        if c == '1' && in_state == 2 {
+            out.push('1');
+            println!("{}", out);
+            in_state = 0;
+        }
+        if c == '0' && (in_state == 1 || in_state == 2) {
+            out.push('0');
+            in_state = 2;
+        } else if in_state == 1 || in_state == 2 {
+            in_state = 0;
+        }
     }
 }
