@@ -1,14 +1,29 @@
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import kotlin.text.StringBuilder
 
 fun main() {
-    var stroka = "11001101000110"
-    val regular = Pattern.compile("1[0]+1")
-    var matcher = regular.matcher(stroka)
+    val str = "sd10sds101sdd100101"
+    var inState = 0
+    var out = StringBuilder()
 
-    while (matcher.find()) {
-        println(matcher.group())
-        stroka = stroka.substring(matcher.end())
-        matcher = regular.matcher(stroka)
+    for (i in str.indices) {
+        when {
+            str[i] == '1' && inState == 0 -> {
+                inState = 1
+                out.append('1')
+            }
+            str[i] == '1' && inState == 2 -> {
+                out.append('1')
+                println(out.toString())
+                inState = 0
+                continue
+            }
+            str[i] == '0' && (inState == 1 || inState == 2) -> {
+                out.append('0')
+                inState = 2
+            }
+            inState == 1 || inState == 2 -> {
+                inState = 0
+            }
+        }
     }
 }
