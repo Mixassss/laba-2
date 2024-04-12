@@ -1,7 +1,23 @@
-const stroka = "11001101000110";
-const regular = new RegExp("1[0]+1", "g");
-const matches = stroka.match(regular);
+let str = "sd10sds101sdd100101"; // строка
+let inVar = 0;
+let out = "";
 
-matches.forEach(match => {
-  console.log(match);
-});
+for (let i = 0; i < str.length; i++) {
+    if (str[i] === '1' && inVar === 0) {
+        inVar = 1;
+        out = '1';
+        continue;
+    }
+    if (str[i] === '1' && inVar === 2) {
+        out += '1';
+        console.log(out);
+        inVar = 0;
+        i--;
+    }
+    if (str[i] === '0' && (inVar === 1 || inVar === 2)) {
+        out += '0';
+        inVar = 2;
+    } else if (inVar === 1 || inVar === 2) {
+        inVar = 0;
+    }
+}
