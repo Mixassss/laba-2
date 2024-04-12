@@ -2,14 +2,29 @@ package main
 
 import (
 	"fmt"
-	"regexp"
 )
 
 func main() {
-	stroka := "11001101000110"
-	regular := regexp.MustCompile("1[0]+1")
-	res := regular.FindAllString(stroka, -1)
-	for _, match := range res {
-		fmt.Println(match)
+	str := "sd10sds101sdd100101" // строка
+	in := 0
+	out := ""
+	for i := 0; i < len(str); i++ {
+		if string(str[i]) == "1" && in == 0 {
+			in = 1
+			out = "1"
+			continue
+		}
+		if string(str[i]) == "1" && in == 2 {
+			out += "1"
+			fmt.Println(out)
+			in = 0
+			i--
+		}
+		if string(str[i]) == "0" && (in == 1 || in == 2) {
+			out += "0"
+			in = 2
+		} else if in == 1 || in == 2 {
+			in = 0
+		}
 	}
 }
