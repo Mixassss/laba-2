@@ -1,16 +1,26 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class dd {
-   public static void main(String[] args){
-    String stroka = "11001101000110";
-        Pattern regular = Pattern.compile("1[0]+1");
-        Matcher matcher = regular.matcher(stroka);
-        
-        while (matcher.find()) {
-            System.out.println(matcher.group());
-            stroka = stroka.substring(matcher.end());
-            matcher = regular.matcher(stroka);
+    public static void main(String[] args) {
+        String str = "sd10sds101sdd100101"; // строка
+        int in = 0;
+        String out = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '1' && in == 0) {
+                in = 1;
+                out = "1";
+                continue;
+            }
+            if (str.charAt(i) == '1' && in == 2) {
+                out += "1";
+                System.out.println(out);
+                in = 0;
+                i--;
+            }
+            if (str.charAt(i) == '0' && (in == 1 || in == 2)) {
+                out += "0";
+                in = 2;
+            } else if (in == 1 || in == 2) {
+                in = 0;
+            }
         }
     }
 }
