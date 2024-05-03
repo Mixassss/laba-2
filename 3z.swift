@@ -1,27 +1,32 @@
 func sumOfDigits(_ n: Int) -> Int {
-    return String(n).compactMap { Int(String($0)) }.reduce(0, +)
+    var sum = 0
+    var number = n
+    while number > 0 {
+        sum += number % 10
+        number /= 10
+    }
+    return sum
 }
 
 func productOfDigits(_ n: Int) -> Int {
-    var result = 1
-    for digit in String(n) {
-        if let digitValue = Int(String(digit)) {
-            result *= digitValue
-        }
+    var product = 1
+    var number = n
+    while number > 0 {
+        product *= number % 10
+        number /= 10
     }
-    return result
+    return product
 }
 
-func findNumbers(_ sequence: [Int]) -> [Int] {
-    var result = [Int]()
-    for (index, number) in sequence.enumerated() {
-        if number >= 0 && sumOfDigits(number) < productOfDigits(number) {
-            result.append(index + 1)
-        }
-    }
-    return result
+func checkNumber(_ n: Int) -> Bool {
+    return sumOfDigits(n) < productOfDigits(n)
 }
 
-let sequence = [3, 27, 14, 99]
-let output = findNumbers(sequence)
-print(output)
+let numbers = [3, 27, 14, 99]
+var index = 1
+for number in numbers {
+    if checkNumber(number) {
+        print(index, terminator: " ")
+    }
+    index += 1
+}
