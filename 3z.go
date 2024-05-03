@@ -1,42 +1,34 @@
-package main
-
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 func sumOfDigits(n int) int {
-	strN := strconv.Itoa(n)
 	sum := 0
-	for _, digit := range strN {
-		digitInt, _ := strconv.Atoi(string(digit))
-		sum += digitInt
+	for n > 0 {
+		sum += n % 10
+		n /= 10
 	}
 	return sum
 }
 
 func productOfDigits(n int) int {
-	strN := strconv.Itoa(n)
-	result := 1
-	for _, digit := range strN {
-		digitInt, _ := strconv.Atoi(string(digit))
-		result *= digitInt
+	prod := 1
+	for n > 0 {
+		prod *= n % 10
+		n /= 10
 	}
-	return result
+	return prod
 }
 
-func findNumbers(sequence []int) []int {
-	result := []int{}
-	for index, number := range sequence {
-		if number >= 0 && sumOfDigits(number) < productOfDigits(number) {
-			result = append(result, index+1)
-		}
-	}
-	return result
+func checkNumber(n int) bool {
+	return sumOfDigits(n) < productOfDigits(n)
 }
 
 func main() {
-	sequence := []int{3, 27, 14, 99}
-	output := findNumbers(sequence)
-	fmt.Println(output)
+	numbers := []int{3, 27, 14, 99}
+	number := 1
+	for _, num := range numbers {
+		if checkNumber(num) {
+			fmt.Print(number, " ")
+		}
+		number++
+	}
 }
