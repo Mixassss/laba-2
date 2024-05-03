@@ -1,17 +1,20 @@
-import Data.Char
+сумма_цифр :: Int -> Int
+сумма_цифр n = go n 0
+  where
+    go 0 acc = acc
+    go n acc = go (n `div` 10) (acc + n `mod` 10)
 
-sumOfDigits :: Int -> Int
-sumOfDigits n = sum $ map digitToInt (show n)
+произведение_цифр :: Int -> Int
+произведение_цифр n = go n 1
+  where
+    go 0 acc = acc
+    go n acc = go (n `div` 10) (acc * (n `mod` 10))
 
-productOfDigits :: Int -> Int
-productOfDigits n = product $ map digitToInt (show n)
-
-findNumbers :: [Int] -> [Int]
-findNumbers sequence = [i + 1 | (i, num) <- zip [0..] sequence, num >= 0, sumOfDigits num < productOfDigits num]
+проверка_числа :: Int -> Bool
+проверка_числа n = сумма_цифр n < произведение_цифр n
 
 main :: IO ()
 main = do
-  let chisla = [3, 27, 14, 99]
-      output = findNumbers chisla
-  mapM_ (putStr . (++ " ") . show) output
-  putStrLn ""
+  let числа = [3, 27, 14, 99]
+  let результаты = filter (\число -> проверка_числа число) числа
+  mapM_ (\(номер, _) -> putStr (show номер ++ " ")) (zip [1..] результаты)
