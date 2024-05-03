@@ -1,27 +1,32 @@
-fn sum_of_digits(n: i32) -> i32 {
-    n.to_string().chars().map(|c| c.to_digit(10).unwrap() as i32).sum()
+fn sum_of_digits(mut n: i32) -> i32 {
+    let mut sum = 0;
+    while n > 0 {
+        sum += n % 10;
+        n /= 10;
+    }
+    sum
 }
 
-fn product_of_digits(n: i32) -> i32 {
-    let mut result = 1;
-    for digit in n.to_string().chars() {
-        result *= digit.to_digit(10).unwrap() as i32;
+fn product_of_digits(mut n: i32) -> i32 {
+    let mut product = 1;
+    while n > 0 {
+        product *= n % 10;
+        n /= 10;
     }
-    result
+    product
 }
 
-fn find_numbers(sequence: Vec<i32>) -> Vec<usize> {
-    let mut result = Vec::new();
-    for (index, &number) in sequence.iter().enumerate() {
-        if number >= 0 && sum_of_digits(number) < product_of_digits(number) {
-            result.push(index + 1);
-        }
-    }
-    result
+fn check_number(n: i32) -> bool {
+    sum_of_digits(n) < product_of_digits(n)
 }
 
 fn main() {
-    let sequence = vec![3, 27, 14, 99];
-    let output = find_numbers(sequence);
-    println!("{:?}", output);
+    let numbers = vec![3, 27, 14, 99];
+    let mut number = 1;
+    for num in numbers {
+        if check_number(num) {
+            print!("{} ", number);
+        }
+        number += 1;
+    }
 }
