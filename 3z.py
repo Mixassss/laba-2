@@ -1,19 +1,25 @@
-def sum_of_digits(n):
-    return sum(int(digit) for digit in str(n))
+def сумма_цифр(n):
+    сумма = 0
+    while n > 0:
+        сумма += n % 10
+        n //= 10
+    return сумма
 
-def product_of_digits(n):
-    result = 1
-    for digit in str(n):
-        result *= int(digit)
-    return result
+def произведение_цифр(n):
+    произведение = 1
+    while n > 0:
+        произведение *= n % 10
+        n //= 10
+    return произведение
 
-def find_numbers(sequence):
-    result = []
-    for index, number in enumerate(sequence):
-        if number >= 0 and sum_of_digits(number) < product_of_digits(number):
-            result.append(index + 1)
-    return result
+def проверка_числа(n):
+    return сумма_цифр(n) < произведение_цифр(n)
 
-sequence = [3, 27, 14, 99]
-output = find_numbers(sequence)
-print(output)
+# Входные данные
+числа = [3, 27, 14, 99]
+номер = 1
+
+for число in числа:
+    if проверка_числа(число):
+        print(номер, end=' ')
+    номер += 1
