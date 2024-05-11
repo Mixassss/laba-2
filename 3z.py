@@ -1,25 +1,26 @@
-def сумма_цифр(n):
-    сумма = 0
-    while n > 0:
-        сумма += n % 10
+def sum_digits(n):
+    s = 0
+    while n:
+        s += n % 10
         n //= 10
-    return сумма
+    return s
 
-def произведение_цифр(n):
-    произведение = 1
-    while n > 0:
-        произведение *= n % 10
+def product_digits(n):
+    p = 1
+    while n:
+        p *= n % 10
         n //= 10
-    return произведение
+    return p
 
-def проверка_числа(n):
-    return сумма_цифр(n) < произведение_цифр(n)
+def check_num(n):
+    return sum_digits(n) < product_digits(n)
 
-# Входные данные
-числа = [3, 27, 14, 99]
-номер = 1
-
-for число in числа:
-    if проверка_числа(число):
-        print(номер, end=' ')
-    номер += 1
+if __name__ == "__main__":
+    numbers = map(int, input().split())
+    result = []
+    index = 1
+    for number in numbers:
+        if check_num(number):
+            result.append(str(index))
+        index += 1
+    print(" ".join(result))
