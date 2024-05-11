@@ -1,32 +1,36 @@
-func sumOfDigits(_ n: Int) -> Int {
-    var sum = 0
-    var number = n
-    while number > 0 {
-        sum += number % 10
-        number /= 10
+func sumDigits(_ n: Int) -> Int {
+    var s = 0
+    var num = n
+    while num != 0 {
+        s += num % 10
+        num /= 10
     }
-    return sum
+    return s
 }
 
-func productOfDigits(_ n: Int) -> Int {
-    var product = 1
-    var number = n
-    while number > 0 {
-        product *= number % 10
-        number /= 10
+func productDigits(_ n: Int) -> Int {
+    var p = 1
+    var num = n
+    while num != 0 {
+        p *= num % 10
+        num /= 10
     }
-    return product
+    return p
 }
 
-func checkNumber(_ n: Int) -> Bool {
-    return sumOfDigits(n) < productOfDigits(n)
+func checkNum(_ n: Int) -> Bool {
+    return sumDigits(n) < productDigits(n)
 }
 
-let numbers = [3, 27, 14, 99]
-var index = 1
-for number in numbers {
-    if checkNumber(number) {
-        print(index, terminator: " ")
+if let input = readLine() {
+    let numbers = input.split(separator: " ").compactMap { Int($0) }
+    var result: [String] = []
+    var index = 1
+    for number in numbers {
+        if checkNum(number) {
+            result.append(String(index))
+        }
+        index += 1
     }
-    index += 1
+    print(result.joined(separator: " "))
 }
