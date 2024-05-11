@@ -1,34 +1,51 @@
-import "fmt"
+package main
 
-func sumOfDigits(n int) int {
-	sum := 0
-	for n > 0 {
-		sum += n % 10
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
+func sumDigits(n int) int {
+	s := 0
+	for n != 0 {
+		s += n % 10
 		n /= 10
 	}
-	return sum
+	return s
 }
 
-func productOfDigits(n int) int {
-	prod := 1
-	for n > 0 {
-		prod *= n % 10
+func productDigits(n int) int {
+	p := 1
+	for n != 0 {
+		p *= n % 10
 		n /= 10
 	}
-	return prod
+	return p
 }
 
-func checkNumber(n int) bool {
-	return sumOfDigits(n) < productOfDigits(n)
+func checkNum(n int) bool {
+	return sumDigits(n) < productDigits(n)
 }
 
 func main() {
-	numbers := []int{3, 27, 14, 99}
-	number := 1
-	for _, num := range numbers {
-		if checkNumber(num) {
-			fmt.Print(number, " ")
-		}
-		number++
+	var numbers []int
+	var input string
+	fmt.Scanln(&input)
+	strNumbers := strings.Split(input, " ")
+	for _, strNum := range strNumbers {
+		num, _ := strconv.Atoi(strNum)
+		numbers = append(numbers, num)
 	}
+
+	var result []string
+	index := 1
+	for _, number := range numbers {
+		if checkNum(number) {
+			result = append(result, strconv.Itoa(index))
+		}
+		index++
+	}
+
+	fmt.Println(strings.Join(result, " "))
 }
