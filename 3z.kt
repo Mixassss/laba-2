@@ -1,34 +1,36 @@
-fun sumOfDigits(n: Int): Int {
-    var sum = 0
+fun sumDigits(n: Int): Int {
+    var s = 0
     var num = n
-    while (num > 0) {
-        sum += num % 10
+    while (num != 0) {
+        s += num % 10
         num /= 10
     }
-    return sum
+    return s
 }
 
-fun productOfDigits(n: Int): Int {
-    var product = 1
+fun productDigits(n: Int): Int {
+    var p = 1
     var num = n
-    while (num > 0) {
-        product *= num % 10
+    while (num != 0) {
+        p *= num % 10
         num /= 10
     }
-    return product
+    return p
 }
 
-fun checkNumber(n: Int): Boolean {
-    return sumOfDigits(n) < productOfDigits(n)
+fun checkNum(n: Int): Boolean {
+    return sumDigits(n) < productDigits(n)
 }
 
 fun main() {
-    val numbers = listOf(3, 27, 14, 99)
+    val numbers = readLine()!!.split(" ").map { it.toInt() }
+    val result = mutableListOf<String>()
     var index = 1
     for (number in numbers) {
-        if (checkNumber(number)) {
-            print("$index ")
+        if (checkNum(number)) {
+            result.add(index.toString())
         }
         index++
     }
+    println(result.joinToString(" "))
 }
