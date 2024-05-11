@@ -1,43 +1,55 @@
 using System;
+using System.Collections.Generic;
 
 class Program
 {
-    static int SumOfDigits(int n)
+    static int SumDigits(int n)
     {
-        int sum = 0;
-        while (n > 0)
+        int s = 0;
+        while (n != 0)
         {
-            sum += n % 10;
+            s += n % 10;
             n /= 10;
         }
-        return sum;
+        return s;
     }
-    static int ProductOfDigits(int n)
+
+    static int ProductDigits(int n)
     {
-        int product = 1;
-        while (n > 0)
+        int p = 1;
+        while (n != 0)
         {
-            product *= n % 10;
+            p *= n % 10;
             n /= 10;
         }
-        return product;
+        return p;
     }
-    static bool CheckNumber(int n)
+
+    static bool CheckNum(int n)
     {
-        return SumOfDigits(n) < ProductOfDigits(n);
+        return SumDigits(n) < ProductDigits(n);
     }
 
     static void Main()
     {
-        int[] numbers = { 3, 27, 14, 99 };
+        string[] numbersStr = Console.ReadLine().Split();
+        List<int> numbers = new List<int>();
+        foreach (string numStr in numbersStr)
+        {
+            numbers.Add(int.Parse(numStr));
+        }
+
+        List<string> result = new List<string>();
         int index = 1;
         foreach (int number in numbers)
         {
-            if (CheckNumber(number))
+            if (CheckNum(number))
             {
-                Console.Write(index + " ");
+                result.Add(index.ToString());
             }
             index++;
         }
+
+        Console.WriteLine(string.Join(" ", result));
     }
 }
