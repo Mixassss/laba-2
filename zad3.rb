@@ -1,31 +1,32 @@
-def сумма_цифр(n)
-    сумма = 0
-    while n > 0
-      сумма += n % 10
-      n /= 10
-    end
-    сумма
+def sum_digits(n)
+  s = 0
+  while n != 0
+    s += n % 10
+    n /= 10
   end
-  
-  def произведение_цифр(n)
-    произведение = 1
-    while n > 0
-      произведение *= n % 10
-      n /= 10
-    end
-    произведение
+  s
+end
+
+def product_digits(n)
+  p = 1
+  while n != 0
+    p *= n % 10
+    n /= 10
   end
-  
-  def проверка_числа(n)
-    сумма_цифр(n) < произведение_цифр(n)
+  p
+end
+
+def check_num(n)
+  sum_digits(n) < product_digits(n)
+end
+
+if __FILE__ == $PROGRAM_NAME
+  numbers = gets.chomp.split.map(&:to_i)
+  result = []
+  index = 1
+  numbers.each do |number|
+    result << index.to_s if check_num(number)
+    index += 1
   end
-  
-  # Входные данные
-  числа = [3, 27, 14, 99]
-  номер = 1
-  числа.each do |число|
-    if проверка_числа(число)
-      print "#{номер} "
-    end
-    номер += 1
-  end
+  puts result.join(" ")
+end
