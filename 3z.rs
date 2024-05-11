@@ -1,32 +1,42 @@
-fn sum_of_digits(mut n: i32) -> i32 {
-    let mut sum = 0;
-    while n > 0 {
-        sum += n % 10;
+fn sum_digits(mut n: i32) -> i32 {
+    let mut s = 0;
+    while n != 0 {
+        s += n % 10;
         n /= 10;
     }
-    sum
+    s
 }
 
-fn product_of_digits(mut n: i32) -> i32 {
-    let mut product = 1;
-    while n > 0 {
-        product *= n % 10;
+fn product_digits(mut n: i32) -> i32 {
+    let mut p = 1;
+    while n != 0 {
+        p *= n % 10;
         n /= 10;
     }
-    product
+    p
 }
 
-fn check_number(n: i32) -> bool {
-    sum_of_digits(n) < product_of_digits(n)
+fn check_num(n: i32) -> bool {
+    sum_digits(n) < product_digits(n)
 }
 
 fn main() {
-    let numbers = vec![3, 27, 14, 99];
-    let mut number = 1;
-    for num in numbers {
-        if check_number(num) {
-            print!("{} ", number);
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    let numbers: Vec<i32> = input
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
+
+    let mut result = Vec::new();
+    let mut index = 1;
+
+    for &number in &numbers {
+        if check_num(number) {
+            result.push(index.to_string());
         }
-        number += 1;
+        index += 1;
     }
+
+    println!("{}", result.join(" "));
 }
