@@ -1,30 +1,43 @@
-function sumOfDigits(n) {
-  let sum = 0;
-  while (n > 0) {
-      sum += n % 10;
-      n = Math.floor(n / 10);
-  }
-  return sum;
+function sumDigits(n) {
+    let s = 0;
+    while (n) {
+        s += n % 10;
+        n = Math.floor(n / 10);
+    }
+    return s;
 }
 
-function productOfDigits(n) {
-  let product = 1;
-  while (n > 0) {
-      product *= n % 10;
-      n = Math.floor(n / 10);
-  }
-  return product;
+function productDigits(n) {
+    let p = 1;
+    while (n) {
+        p *= n % 10;
+        n = Math.floor(n / 10);
+    }
+    return p;
 }
 
-function checkNumber(n) {
-  return sumOfDigits(n) < productOfDigits(n);
+function checkNum(n) {
+    return sumDigits(n) < productDigits(n);
 }
 
-const numbers = [3, 27, 14, 99];
-let index = 1;
-for (let number of numbers) {
-  if (checkNumber(number)) {
-      process.stdout.write(index + ' ');
-  }
-  index++;
-}
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question('Enter numbers separated by space: ', (input) => {
+    const numbers = input.split(' ').map(Number);
+    const result = [];
+    let index = 1;
+
+    numbers.forEach((number) => {
+        if (checkNum(number)) {
+            result.push(String(index));
+        }
+        index++;
+    });
+
+    console.log(result.join(' '));
+    rl.close();
+});
